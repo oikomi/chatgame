@@ -17,6 +17,7 @@ type SecureClient struct {
 	outgoing chan string
 	name     string
 	Alive    bool
+	mutex         sync.Mutex
 }
 
 
@@ -50,7 +51,7 @@ func (self *SecureClient) Read() {
 			return
 		}
 		self.incoming <- string(buf)
-		self.Alive = true
+		self.setAlive(true)
 	}
 
 }
@@ -72,6 +73,12 @@ func (self *SecureClient) Write() {
 			return
 		}
 	}
+}
+
+func (self *SecureClient) setAlive(flag) {
+	self.mutex.Lock()
+	defer self.mutex.Unlock()
+	self.Alive = flag
 }
 
 func (self *SecureClient) Close() {

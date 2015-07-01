@@ -159,7 +159,7 @@ func (self *SecureServer)scanDeadSession() {
 					if c.Alive == false {
 						self.delOffline(c)
 					} else {
-						c.Alive = false
+						c.setAlive(false)
 					}
 					self.scanSessionMutex.Unlock()
 				}
