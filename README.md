@@ -27,6 +27,17 @@ from beijing to shanghai
 Connection closed by foreign host.
 </code></pre>
 
+重名
+<pre><code>
+root@ubuntu:/# telnet 127.0.0.1 8080
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+Please input your username :
+/setName zhangsan
+username is already used, Please input your username :
+</code></pre>
+
 
 60超时
 ======
