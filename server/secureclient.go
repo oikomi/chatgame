@@ -76,7 +76,7 @@ func (self *SecureClient) Write() {
 	}
 }
 
-func (self *SecureClient) setAlive(flag) {
+func (self *SecureClient) setAlive(flag bool) {
 	self.mutex.Lock()
 	defer self.mutex.Unlock()
 	self.Alive = flag
