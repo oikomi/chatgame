@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"sync"
+	"time"
 	"strings"
 )
 
@@ -19,6 +20,7 @@ type SecureServer struct {
 	incoming      Message
 	
 	mutex         sync.Mutex
+	scanSessionMutex  sync.Mutex
 }
 
 func CreateServer() *SecureServer {
@@ -51,6 +53,7 @@ func (self *SecureServer)Listen(port string) {
         return
     }
 	go self.serverEvent()
+	go self.scanDeadSession()
 	for {
 		conn, err := listener.Accept()
 		//log.Printf("Accept")
@@ -142,4 +145,27 @@ func (self *SecureServer)delOffline(client *SecureClient) {
 	self.sendToEveryClientRaw(fmt.Sprintf("%s is offline", client.GetName()))
 	client.conn.Close()
 	delete(self.clients, client.conn)
+}
+
+func (self *SecureServer)scanDeadSession() {
+	timer := time.NewTicker(60 * time.Second)
+	ttl := time.After(100 * time.Second)
+	for {
+		select {
+		case <-timer.C:
+			go func() {
+				for _, c := range self.clients {
+					self.scanSessionMutex.Lock()
+					if c.Alive == false {
+						self.delOffline(c)
+					} else {
+						c.Alive = false
+					}
+					self.scanSessionMutex.Unlock()
+				}
+			}()
+		case <-ttl:
+			break
+		}
+	}
 }

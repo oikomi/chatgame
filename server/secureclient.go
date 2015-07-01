@@ -16,6 +16,7 @@ type SecureClient struct {
 	incoming chan string
 	outgoing chan string
 	name     string
+	Alive    bool
 }
 
 
@@ -46,11 +47,10 @@ func (self *SecureClient) Read() {
 		buf := make([]byte, 10000)
 		_ , err := self.reader.Read(buf)
 		if err != nil {
-			//fmt.Println("Read error")
 			return
 		}
-		//log.Printf("Read %d bytes\n", n)
 		self.incoming <- string(buf)
+		self.Alive = true
 	}
 
 }

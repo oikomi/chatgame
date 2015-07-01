@@ -36,4 +36,6 @@ func main() {
 	server := server.CreateServer()
 	
 	server.Listen(cfg.Listen)
+	
+	
 }
