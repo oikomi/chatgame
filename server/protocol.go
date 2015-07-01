@@ -94,12 +94,12 @@ func setName(server *SecureServer, client *SecureClient, args []string) {
 
 func weather(server *SecureServer, client *SecureClient, args []string) {
 	addr := args[0]
-	server.messageProcessRaw(fmt.Sprintf("%s is sunnshine", addr))
+	server.messageProcessRaw(fmt.Sprintf("%s is sunnshine \n", addr))
 }
 
 func ticket(server *SecureServer, client *SecureClient, args []string) {
 	from := args[0]
 	to := args[1]
-	server.messageProcessRaw(fmt.Sprintf("from %s to %s is sell out", from, to))
+	server.messageProcessRaw(fmt.Sprintf("from %s to %s is sell out \n", from, to))
 }
 
