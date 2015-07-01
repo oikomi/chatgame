@@ -26,3 +26,9 @@ from beijing to shanghai
 /quit
 Connection closed by foreign host.
 </code></pre>
+
+
+60超时
+======
+在client结构中加一个Alive字段，起一个定时器60去遍历clients, Alive为false,则干掉连接。 注意：在read里读到数据会把Alive设为true
+
