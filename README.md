@@ -63,3 +63,6 @@ lisi
 ======
 在client结构中加一个Alive字段，起一个定时器60去遍历clients, Alive为false,则干掉连接。 注意：在read里读到数据会把Alive设为true
 
+协议
+======
+协议设计采用redis类似设计，可扩展性非常好
